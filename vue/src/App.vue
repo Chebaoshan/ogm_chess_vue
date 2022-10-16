@@ -1,13 +1,8 @@
 <template>
   <Navi></Navi>
 </template>
-
-<script>
+<script setup>
 import Navi from './views/Navi.vue'
-export default {
-  name: "App",
-  components: { Navi }
-}
 </script>
 <style>
 

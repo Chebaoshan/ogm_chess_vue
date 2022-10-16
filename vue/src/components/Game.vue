@@ -3,15 +3,8 @@
         <Board></Board>
     </div>
 </template>
-<script>
+<script setup>
 import Board from './Board.vue';
-export default {
-    data() {
-        return {};
-    },
-    methods: {},
-    components: { Board }
-}
 </script>
 
 <style scoped>

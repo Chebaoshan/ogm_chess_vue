@@ -21,19 +21,12 @@
         </div>
     </div>
 </template>
-<script>
+<script setup>
 import Square from './Square.vue'
 import Playinfo from './Playinfo.vue';
 import Feet from './Feet.vue';
-export default {
-    components: { Square, Playinfo, Feet },
-    name: "Board",
-    data() {
-        return {
-            "position": [0, 1, 2, 3, 4, 5, 6, 7, 8]
-        }
-    }
-}
+import { ref } from 'vue'
+const position = ref([0, 1, 2, 3, 4, 5, 6, 7, 8])
 </script>
 <style>
 .row {

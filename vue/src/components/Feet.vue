@@ -4,28 +4,18 @@
         <button @click="quit">Game Over</button>
     </div>
 </template>
-<script>
-import { useGameStore } from '../store/gameStore'
-export default {
-    name: "feet",
-    setup() {
-        const store = useGameStore()
-
-        return { store }
-    },
-    data() {
-        return {}
-    },
-    methods: {
-        quit() {
-            this.store.$reset()
-            this.$router.push({ name: 'login' })
-        },
-        reset() {
-            this.store.result = true
-            setTimeout(() => { this.store.$reset(); }, 10)
-        }
-    }
+<script setup>
+import { useGameStore } from '../store/store'
+import { useRouter } from 'vue-router'
+const store = useGameStore()
+const router = useRouter()
+const quit = () => {
+    store.$reset()
+    router.push({ name: 'login' })
+}
+const reset = () => {
+    store.result = true
+    setTimeout(() => { store.$reset(); }, 10)
 }
 </script>
 <style>

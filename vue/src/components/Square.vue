@@ -1,61 +1,33 @@
 <template>
     <div class="square" @click="handleClick">
-        {{cell_value}}
+        {{cell}}
     </div>
 </template>
-<script>
-import { useGameStore } from '../store/gameStore'
+<script setup>
+import { useGameStore } from '../store/store'
 import { winner } from '../utils/winner'
-export default {
-    name: "Square",
-    props: ['position'],
-    setup() {
-        const store = useGameStore()
-        return { store }
-    },
-    data() {
-        return {
-            pos: this.position,
-            cell_value: null,
-        }
-    },
-    watch: {
-        getResult() {
-            this.cell_value = null
-
-            console.log(this.store.history)
-        }
-    },
-    computed: {
-        getPlayer() {
-            return this.store.currentPlayer()
-        },
-        getCount() {
-            return this.store.count
-        },
-        getResult() {
-            return this.store.result;
-        },
-        getHistory() {
-            return this.store.history;
-        }
-    },
-    methods: {
-        handleClick() {
-            const a = this.store.getCount() % 2 == 0 ? 'X' : 'O'
-            if (this.cell_value === null) {
-                this.cell_value = a
-                this.store.renewHistory(this.pos)
-                this.store.addCount();
-            }
-            const res = winner(this.getHistory)
-            if (res.result) {
-                alert(`${res.winner}`)
-                this.store.setResult();
-                setTimeout(() => { this.store.$reset(); }, 10)
-
-            }
-        }
+import { watch, reactive, toRefs, computed } from 'vue'
+const props = defineProps(['position'])
+const store = useGameStore()
+const data = reactive({ pos: props.position, cell: null })
+const getResult = computed(() => { return store.result })
+const getHistory = computed(() => { return store.history })
+const { pos, cell } = toRefs(data)
+watch([getResult], () => {
+    cell.value = null
+})
+const handleClick = () => {
+    const current_value = store.getCount() % 2 == 0 ? 'X' : 'O'
+    if (cell.value === null) {
+        cell.value = current_value
+        store.renewHistory(pos)
+        store.addCount();
+    }
+    const res = winner(getHistory.value)
+    if (res.result) {
+        alert(`${res.winner}`)
+        store.setResult();
+        setTimeout(() => { store.$reset(); }, 10)
     }
 }
 </script>

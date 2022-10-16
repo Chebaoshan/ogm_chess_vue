@@ -3,10 +3,7 @@
         Login
     </div>
 </template>
-<script>
-export default {
-    name: "Login",
-}
+<script setup>
 </script>
 <style>
 .login {

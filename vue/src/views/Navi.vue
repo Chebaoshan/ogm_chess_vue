@@ -8,10 +8,8 @@
     </div>
 </template>
   
-<script>
-export default {
-    name: "Navi",
-}
+<script setup>
+
 </script>
 <style>
 .Navi {
